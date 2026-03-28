@@ -2,15 +2,21 @@
 
 Highlighter is a lightweight macOS menu bar app for streamers, video creators, demos, and live presentations. Press a hotkey, draw directly on top of your screen with a modern shifting gradient, and let the ink fade away automatically.
 
+## Demo
+
+![Highlighter demo](./demo.gif)
+
+[Watch or download the full demo video](./demo.mov)
+
 ## Download
 
 Users should not need to build Highlighter from source. Once you publish a GitHub Release, they can download the latest macOS build directly from:
 
-`https://github.com/sumukhah/highlighter/releases/latest/download/Highlighter-macOS.zip`
+[Download Highlighter for macOS](https://github.com/sumukhah/highlighter/releases/latest/download/Highlighter-macOS.zip)
 
 Repository home:
 
-`https://github.com/sumukhah/highlighter`
+[sumukhah/highlighter](https://github.com/sumukhah/highlighter)
 
 The release archive name already matches the download URL above.
 
@@ -72,6 +78,40 @@ Install locally for testing:
 ```bash
 ./scripts/install-app.sh
 ```
+
+### Signed And Notarized Releases
+
+For public macOS distribution, Highlighter should be Developer ID signed and notarized before release. This repository supports that flow.
+
+Local environment variables used by the release scripts:
+
+- `APPLE_SIGNING_IDENTITY`
+  Example: `Developer ID Application: Your Name (TEAMID)`
+- `APPLE_ID`
+- `APPLE_TEAM_ID`
+- `APPLE_APP_SPECIFIC_PASSWORD`
+
+Local notarized release build:
+
+```bash
+APPLE_SIGNING_IDENTITY="Developer ID Application: Your Name (TEAMID)" \
+APPLE_ID="you@example.com" \
+APPLE_TEAM_ID="TEAMID" \
+APPLE_APP_SPECIFIC_PASSWORD="app-specific-password" \
+./scripts/build-release-zip.sh
+```
+
+GitHub Actions secrets expected by the release workflow:
+
+- `BUILD_CERTIFICATE_BASE64`
+- `P12_PASSWORD`
+- `KEYCHAIN_PASSWORD`
+- `APPLE_SIGNING_IDENTITY`
+- `APPLE_ID`
+- `APPLE_TEAM_ID`
+- `APPLE_APP_SPECIFIC_PASSWORD`
+
+`BUILD_CERTIFICATE_BASE64` should be a base64-encoded `.p12` export of your Developer ID Application certificate.
 
 ## Development
 
