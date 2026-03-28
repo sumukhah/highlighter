@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to upload to, for example v1.0.1
+        required: true
 
 permissions:
   contents: write
@@ -25,7 +29,7 @@ jobs:
         run: ./scripts/build-release-zip.sh
 
       - name: Upload asset to release
-        if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.release.tag_name || inputs.tag }}
           files: dist/Highlighter-macOS.zip
